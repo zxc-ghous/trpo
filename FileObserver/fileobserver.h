@@ -4,22 +4,23 @@
 
 #include <QObject>
 #include <iostream>
+#include <QFileInfo>
+#include <QList>
+
 class FileObserver: public QObject
 {
     Q_OBJECT
 public:
-    static FileObserver& instance()
-    {
-        static FileObserver instance;
-        return instance;
-    }
-    void set(int d_) {d=d_;}
-    void print() {std::cout<<d<<std::endl;}
-private:
-    int d;
     FileObserver(){}
-    FileObserver(const FileObserver& root) = delete;
-    FileObserver& operator=(const FileObserver&) = delete;
+    ~FileObserver(){}
+    void addFile (QString filename);
+    QList<QString> watched_files;
+
+
+signals:
+    void logMessage (QString str);
+public slots:
+    void checkFiles ();
 };
 
 
