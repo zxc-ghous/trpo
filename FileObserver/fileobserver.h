@@ -6,6 +6,7 @@
 #include <iostream>
 #include <QFileInfo>
 #include <QList>
+#include <QDateTime>
 
 class FileObserver: public QObject
 {
@@ -14,13 +15,21 @@ public:
     FileObserver(){}
     ~FileObserver(){}
     void addFile (QString filename);
-    QList<QString> watched_files;
-
+private:
+    struct fileStatus
+    {
+        unsigned int size;
+        bool exist;
+        QDateTime last_modified;
+        QDateTime birth_time;
+    };
+    QMap<QString, fileStatus> watched_files;
 
 signals:
     void logMessage (QString str);
 public slots:
-    void checkFiles ();
+    void fileMessage (QString str);
+    void checkFiles();
 };
 
 
