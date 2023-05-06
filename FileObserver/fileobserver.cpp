@@ -15,11 +15,20 @@ void FileObserver:: addFile(QString filename)
     file_status.size=file_info.size();
     file_status.exist=file_info.exists();
     file_status.last_modified=file_info.lastModified();
-    file_status.birth_time=file_info.birthTime();
 
     watched_files.insert(file_info.absoluteFilePath(), file_status);
     emit logMessage(QString {} + "Now watch file: " + file_info.absoluteFilePath());
 
+}
+
+void FileObserver:: setDirectory(QString directory)
+{
+    QDir dir(directory);
+    QStringList files = dir.entryList(QDir::Files);
+    for (auto& i : files  )
+    {
+        addFile(dir.absoluteFilePath(i));
+    }
 }
 
 void FileObserver::fileMessage(QString str)
@@ -39,15 +48,15 @@ void FileObserver::checkFiles()
             i.value().exist = file_info.exists();
             emit logMessage(QString {} + "file " + i.key() + " erased");
         }
-        else if (i.value().birth_time != file_info.birthTime())
+        else if (!i.value().exist && file_info.exists())
         {
-            i.value().birth_time = file_info.birthTime();
             i.value().exist = file_info.exists();
             emit logMessage(QString {} + "file " + i.key() + " created");
         }
-        else if ((i.value().last_modified != file_info.lastModified()))
+        else if ((i.value().size != file_info.size()) && i.value().exist)
         {
             i.value().last_modified = file_info.lastModified();
+            i.value().size = file_info.size();
             emit logMessage(QString {} + "file " + i.key() + " modified");
         }
     }

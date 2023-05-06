@@ -5,8 +5,9 @@
 #include <QObject>
 #include <iostream>
 #include <QFileInfo>
-#include <QList>
 #include <QDateTime>
+#include <QDir>
+#include <QStringList>
 
 class FileObserver: public QObject
 {
@@ -15,13 +16,13 @@ public:
     FileObserver(){}
     ~FileObserver(){}
     void addFile (QString filename);
+    void setDirectory (QString directory);
 private:
     struct fileStatus
     {
         unsigned int size;
         bool exist;
         QDateTime last_modified;
-        QDateTime birth_time;
     };
     QMap<QString, fileStatus> watched_files;
 
