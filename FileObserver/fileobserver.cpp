@@ -31,6 +31,13 @@ void FileObserver:: setDirectory(QString directory)
     }
 }
 
+void FileObserver:: updateStatus(QString key, QFileInfo file_info)
+{
+    watched_files[key].exist = file_info.exists();
+    watched_files[key].size = file_info.size();
+    watched_files[key].last_modified = file_info.lastModified();
+}
+
 void FileObserver::fileMessage(QString str)
 {
     std::cout<<str.toStdString()<<std::endl;
@@ -45,18 +52,17 @@ void FileObserver::checkFiles()
 
         if (i.value().exist && !file_info.exists())
         {
-            i.value().exist = file_info.exists();
+            updateStatus(i.key(), file_info);
             emit logMessage(QString {} + "file " + i.key() + " erased");
         }
         else if (!i.value().exist && file_info.exists())
         {
-            i.value().exist = file_info.exists();
+            updateStatus(i.key(), file_info);
             emit logMessage(QString {} + "file " + i.key() + " created");
         }
         else if ((i.value().size != file_info.size()) && i.value().exist)
         {
-            i.value().last_modified = file_info.lastModified();
-            i.value().size = file_info.size();
+            updateStatus(i.key(), file_info);
             emit logMessage(QString {} + "file " + i.key() + " modified");
         }
     }

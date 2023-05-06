@@ -24,6 +24,7 @@ private:
         bool exist;
         QDateTime last_modified;
     };
+    void updateStatus(QString key, QFileInfo file_info);
     QMap<QString, fileStatus> watched_files;
 
 signals:
