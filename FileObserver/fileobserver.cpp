@@ -38,9 +38,18 @@ void FileObserver:: updateStatus(QString key, QFileInfo file_info)
     watched_files[key].last_modified = file_info.lastModified();
 }
 
+void FileObserver:: getWatchedFiles ()
+{
+    QMap<QString, fileStatus>::iterator i;
+    for (i = watched_files.begin(); i != watched_files.end(); ++i)
+    {
+        qDebug()<<i.key();
+    }
+}
+
 void FileObserver::fileMessage(QString str)
 {
-    std::cout<<str.toStdString()<<std::endl;
+    qDebug()<<str;
 }
 
 void FileObserver::checkFiles()

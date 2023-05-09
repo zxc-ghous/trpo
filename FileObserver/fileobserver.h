@@ -17,6 +17,7 @@ public:
     ~FileObserver(){}
     void addFile (QString filename);
     void setDirectory (QString directory);
+    void getWatchedFiles ();
 private:
     struct fileStatus
     {

@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
 //    file_watcher.addFile("F:\\my_datasets\\lab1Testing\\test3.txt");
 
     file_watcher.setDirectory("F:\\my_datasets\\lab1Testing");
+    file_watcher.getWatchedFiles();
 
     timer->start(1000);
     return a.exec();
