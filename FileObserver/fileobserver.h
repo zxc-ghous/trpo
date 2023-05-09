@@ -7,6 +7,7 @@
 #include <QFileInfo>
 #include <QDateTime>
 #include <QDir>
+#include <QMap>
 #include <QStringList>
 
 class FileObserver: public QObject
@@ -15,9 +16,10 @@ class FileObserver: public QObject
 public:
     FileObserver(){}
     ~FileObserver(){}
-    void addFile (QString filename);
+    void addFile (QString filepath);
+    void removeFile (QString filepath);
     void setDirectory (QString directory);
-    void getWatchedFiles ();
+    void printWatchedFiles ();
 private:
     struct fileStatus
     {
@@ -32,7 +34,7 @@ signals:
     void logMessage (QString str);
 public slots:
     void fileMessage (QString str);
-    void checkFiles();
+    void fileChecker();
 };
 
 

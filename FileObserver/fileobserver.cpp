@@ -2,12 +2,12 @@
 #include "fileobserver.h"
 
 
-void FileObserver:: addFile(QString filename)
+void FileObserver:: addFile(QString filepath)
 {
-    QFileInfo file_info(filename);
+    QFileInfo file_info(filepath);
     if (watched_files.contains(file_info.absoluteFilePath()))
     {
-        emit logMessage(QString {} + file_info.absoluteFilePath() + " is already watched");
+        emit logMessage(QString {} + file_info.absoluteFilePath() + " is already observed");
         return;
     }
 
@@ -17,8 +17,15 @@ void FileObserver:: addFile(QString filename)
     file_status.last_modified=file_info.lastModified();
 
     watched_files.insert(file_info.absoluteFilePath(), file_status);
-    emit logMessage(QString {} + "Now watch file: " + file_info.absoluteFilePath());
+    emit logMessage(QString {} + "Now observe file: " + file_info.absoluteFilePath());
 
+}
+
+void FileObserver:: removeFile(QString filepath)
+{
+    QFileInfo file_info(filepath);
+    watched_files.remove(file_info.absoluteFilePath());
+    emit logMessage(QString {} + file_info.absoluteFilePath() + " is no longer observed");
 }
 
 void FileObserver:: setDirectory(QString directory)
@@ -38,12 +45,12 @@ void FileObserver:: updateStatus(QString key, QFileInfo file_info)
     watched_files[key].last_modified = file_info.lastModified();
 }
 
-void FileObserver:: getWatchedFiles ()
+void FileObserver:: printWatchedFiles ()
 {
     QMap<QString, fileStatus>::iterator i;
     for (i = watched_files.begin(); i != watched_files.end(); ++i)
     {
-        qDebug()<<i.key();
+        emit logMessage(i.key());
     }
 }
 
@@ -52,7 +59,7 @@ void FileObserver::fileMessage(QString str)
     qDebug()<<str;
 }
 
-void FileObserver::checkFiles()
+void FileObserver::fileChecker()
 {
     QMap<QString, fileStatus>::iterator i;
     for (i = watched_files.begin(); i != watched_files.end(); ++i)
