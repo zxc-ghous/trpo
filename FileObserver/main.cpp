@@ -3,12 +3,13 @@
 #include <iostream>
 #include "fileobserver.h"
 #include <QTimer>
-
-//TODO: когда файл создается вызывается модификация
+#ifdef Q_OS_WIN
+//#ifdef Q_OS_UNIX
 int main(int argc, char *argv[])
 {
+
     QCoreApplication a(argc, argv);
-    FileObserver file_watcher;
+    FileObserver& file_watcher = FileObserver::instance();
     QTimer *timer = new QTimer();
 
     QObject::connect(&file_watcher,&FileObserver::logMessage,&FileObserver::fileMessage);
@@ -20,7 +21,13 @@ int main(int argc, char *argv[])
 
     file_watcher.setDirectory("F:\\my_datasets\\lab1Testing");
 
+    QFileInfo info1("F:\\my_datasets\\lab1Testing\\test1.txt");
+    qDebug()<<info1.absoluteFilePath();
+    qDebug()<<info1.size();
+
+
     timer->start(1000);
     return a.exec();
 }
 
+#endif
