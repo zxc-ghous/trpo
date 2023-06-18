@@ -1,10 +1,7 @@
 
 #ifndef IOCC_H
 #define IOCC_H
-#pragma once
-#include <map>
 #include <typeinfo>
-#include <memory>
 #include <QMap>
 
 class IoCContainer
