@@ -1,7 +1,7 @@
 
 #ifndef ABSTRACTFACTORY_H
 #define ABSTRACTFACTORY_H
-
+#include "unit.h"
 
 class CodeFactory
 {
