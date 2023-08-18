@@ -16,5 +16,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     AbstractFactory.h \
+    c_sharp.h \
     cpp.h \
     unit.h
