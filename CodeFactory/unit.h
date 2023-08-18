@@ -115,7 +115,7 @@ public:
         PROTECTED_INTERNAL,
         PRIVATE_PROTECTED
     };
-    static const std::vector<std::string> ACCESS_MODIFIERS;
+    static const std::vector<std::string> ACCESS_MODIFIERS; // почему реализация этого вынесена в cpp
 
     explicit ClassUnit(const std::string& name) //explicit???
     {
