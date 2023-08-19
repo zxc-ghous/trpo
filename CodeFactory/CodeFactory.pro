@@ -18,4 +18,5 @@ HEADERS += \
     AbstractFactory.h \
     c_sharp.h \
     cpp.h \
+    java.h \
     unit.h
